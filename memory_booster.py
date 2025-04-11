@@ -98,7 +98,7 @@ class Game:
     def _length_selector(self):
         ''' Method that selects length of levels '''
         print("You can customize the length of numbers for Easy and Hard levels.")
-        print("Note: Medium level length is fixed.")
+        print("Note: Medium level length is fixed and length cannot be ZERO.")
         
         # Load existing lengths from score.json or initialize default
         try:

@@ -43,7 +43,7 @@ class EasyLevel(Level):
             with open('score.json', 'r') as file:
                 data = json.load(file)
                 if self.player.username in data:
-                    return int(data[self.player.username][0])  # Easy level length
+                    return int(data[self.player.username][0]) if int(data[self.player.username][0]) != 0 else 5 # Easy level length
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         return 5  # Default length for Easy level
@@ -170,6 +170,7 @@ class HardLevel(Level):
         super().__init__(player)  # Pass player to the base class
         self.difficulty = "Hard"
         self.time_to_memorize = 4
+        self.length = int(self._get_length())  # Get length from the json file
         # Remove self.length here to rely on the class attribute
     
     def get_instructions(self):
@@ -181,7 +182,7 @@ class HardLevel(Level):
             with open('score.json', 'r') as file:
                 data = json.load(file)
                 if self.player.username in data:
-                    return int(data[self.player.username][1])  # Hard level length
+                    return int(data[self.player.username][1]) if int(data[self.player.username][1]) != 0 else 8  # Hard level length
         except (FileNotFoundError, json.JSONDecodeError):
             pass
         return 8  # Default length for Hard level
@@ -198,7 +199,7 @@ class HardLevel(Level):
     def _guess(self):
         ''' All guess functionary '''
         random_number = ''.join(random.choices(
-            '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
+            '01234567890123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
             k=self.length  # Generate a random sequence of the specified length
         ))
         sys.stdout.write(f"\nMemorize this number: {random_number}") 
@@ -216,7 +217,6 @@ class HardLevel(Level):
             '''Thread function to get user input'''
             answer[0] = input("\nEnter the number you memorized: ")
 
-        start_time = time.time()
         print(f" You have {self.time_to_recall} seconds to write")
         input_thread = threading.Thread(target=get_input)
         input_thread.start()
