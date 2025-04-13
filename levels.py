@@ -199,7 +199,7 @@ class HardLevel(Level):
     def _guess(self):
         ''' All guess functionary '''
         random_number = ''.join(random.choices(
-            '01234567890123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
+            '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
             k=self.length  # Generate a random sequence of the specified length
         ))
         sys.stdout.write(f"\nMemorize this number: {random_number}") 
